@@ -185,9 +185,9 @@ def confirm_and_make_newsletter(message):
 
     if len(parameters[MAILING_LIST_PARAMETER_KEY]) > 0:
         if message.text == str(datetime.now().day):
-            for chat_id in parameters[MAILING_LIST_PARAMETER_KEY].split('\n'):
-                if validate_chat_id(chat_id):
-                    bot.send_message(chat_id, message_to_send, parse_mode="markdown")
+            for chat_id_from_list in parameters[MAILING_LIST_PARAMETER_KEY].split('\n'):
+                if validate_chat_id(chat_id_from_list):
+                    bot.send_message(chat_id_from_list, message_to_send, parse_mode="markdown")
             bot.send_message(chat_id, 'SENT')
             cache.set_state(chat_id, ChatState.FREE)
         else:
