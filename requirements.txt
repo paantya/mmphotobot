@@ -1,0 +1,14 @@
+certifi==2018.1.18
+chardet==3.0.4
+enum34==1.1.6
+get==0.0.39
+idna==2.6
+Pillow==5.0.0
+post==0.0.26
+public==0.0.65
+telebot==0.0.3
+pyTelegramBotAPI==3.6.2
+query-string==0.0.28
+requests==2.7.0
+six==1.11.0
+urllib3==1.22
