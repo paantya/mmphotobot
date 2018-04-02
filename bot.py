@@ -21,20 +21,20 @@ SET_ADMIN_PARAMETER_COMMAND = 'set_admin_parameter'
 MAILING_LIST_PARAMETER_KEY = 'mailing_list'
 
 START_MESSAGE_TEXT = 'Hello. To make an image type "/" and select a parameter you want to specify. ' \
-                     'After specifying parameters send or choose the background picture to get the result.'
+                     'After specifying parameters send or choose a background picture to get the result.'
 CANCEL_MESSAGE_TEXT = '👌'
 UP_MESSAGE_TEXT = 'I am up 🌚'
-EXCEPTION_MESSAGE_TEXT = '❗ Exception has been thrown. Go to logs for more info️'
-START_MESSAGE_ADMIN_TEXT = "Make a newsletter: /" + MAKE_NEWSLETTER_COMMAND\
-                           + "\nSet admin parameter: /" + SET_ADMIN_PARAMETER_COMMAND\
+EXCEPTION_MESSAGE_TEXT = '‼️ Exception has been thrown. Go to logs for more info️'
+START_MESSAGE_ADMIN_TEXT = "Set admin parameter: /" + SET_ADMIN_PARAMETER_COMMAND\
+                           + "\nMake a newsletter: /" + MAKE_NEWSLETTER_COMMAND\
                            + "\n\nMailing list parameter name: " + MAILING_LIST_PARAMETER_KEY
 SEND_ME_PHOTO_PARAMETER_TEXT = 'Ok. Send it to me, please'
 OPACITY_CLARIFICATION_TEXT = " Remember, this parameter represents an intensity of darkening layer, " \
-                             "so it should be a float from 0 to 1. Optimal value is from 0.6 to 0.9"
-WAIT_FOR_AN_IMAGE_MESSAGE_TEXT = "One moment..."
-DOLORES_KEY_PHRASE = 'I\'m trying, but I don\'t understand. Type /start to get instructions'
-OPACITY_VALIDATION_FAIL_MESSAGE_TEXT = 'Sorry, opacity should be a float number from 0 to 1. Please, try again'
-DONE_MESSAGE_TEXT = 'Done!'
+                             "so it should be a float from 0 to 1 ☝️ Optimal values are from 0.5 to 1 "
+WAIT_FOR_AN_IMAGE_MESSAGE_TEXT = "One moment... ⏳"
+DOLORES_KEY_PHRASE = 'I\'m trying, but I don\'t understand 😔 Type /start to get instructions'
+OPACITY_VALIDATION_FAIL_MESSAGE_TEXT = 'Sorry, opacity should be a float number from 0 to 1.  Please, try again 🌚'
+DONE_MESSAGE_TEXT = 'Done ☑️'
 
 STOCK_IMAGES_DIRECTORY = 'images/stock/'
 SENT_IMAGE_FILE_NAME = 'image.jpg'

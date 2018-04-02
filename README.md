@@ -8,7 +8,7 @@ The keyboard with stock photos filenames… **I know.** I know it isn’t great,
 
 I still need to sleep 6 hours a day because of some cloudish rules. Sometimes, I think, we will be doing it together (I **love** when we do it together), sometimes we will not. So please, don’t be mad at me when I don’t answer 😔.
 
-You can start using me right now by pressing “/“ button at t.me/mmphotobot and specifying heading, subheading and opacity.
+You can start using me right now by pressing “/“ button [in Telegram app](https://t.me/mmphotobot) and specifying heading, subheading and opacity.
 
 And remember,
 ### I love you. Constantly and unconditionally.
