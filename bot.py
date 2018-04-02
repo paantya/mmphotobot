@@ -25,11 +25,11 @@ START_MESSAGE_TEXT = 'Hello. To make an image type "/" and select a parameter yo
 CANCEL_MESSAGE_TEXT = '👌'
 UP_MESSAGE_TEXT = 'I am up 🌚'
 EXCEPTION_MESSAGE_TEXT = '‼️ Exception has been thrown. Go to logs for more info️'
-START_MESSAGE_ADMIN_TEXT = "Set admin parameter: /" + SET_ADMIN_PARAMETER_COMMAND\
-                           + "\nMake a newsletter: /" + MAKE_NEWSLETTER_COMMAND\
+START_MESSAGE_ADMIN_TEXT = "Set admin parameter: /" + SET_ADMIN_PARAMETER_COMMAND \
+                           + "\nMake a newsletter: /" + MAKE_NEWSLETTER_COMMAND \
                            + "\n\nMailing list parameter name: " + MAILING_LIST_PARAMETER_KEY
 SEND_ME_PHOTO_PARAMETER_TEXT = 'Ok. Send it to me, please'
-OPACITY_CLARIFICATION_TEXT = " Remember, this parameter represents an intensity of darkening layer, " \
+OPACITY_CLARIFICATION_TEXT = ". Remember, this parameter represents an intensity of darkening layer, " \
                              "so it should be a float from 0 to 1 ☝️ Optimal values are from 0.5 to 1 "
 WAIT_FOR_AN_IMAGE_MESSAGE_TEXT = "One moment... ⏳"
 DOLORES_KEY_PHRASE = 'I\'m trying, but I don\'t understand 😔 Type /start to get instructions'
@@ -85,13 +85,21 @@ def debug_message_processing(message):
     chat_id = message.chat.id
 
     if chat_id == ADMIN_ID:
-        if (len(message.text) > 11) and (message.text[:1] == '$'):
+        if len(message.text) > 5 and message.text[:1] == '$':
             array = message.text[2:].split()
             if len(array) > 1:
                 id_of_chat_where_to_send = array[0]
                 text = message.text[2 + len(id_of_chat_where_to_send) + 1:]
                 bot.send_message(id_of_chat_where_to_send, text)
                 bot.send_message(chat_id, "MESSAGE SENT")
+
+        if len(message.text) > 5 and message.text[:1] == '%':
+            array = message.text[2:].split()
+            if len(array) > 1:
+                id_of_chat_where_to_delete = array[0]
+                id_of_message_to_delete = array[1]
+                bot.delete_message(id_of_chat_where_to_delete, id_of_message_to_delete)
+                bot.send_message(chat_id, "MESSAGE DELETED")
     else:
         bot.send_message(ADMIN_ID, "MESSAGE FROM " + str(message.chat.first_name) + " @" + str(
             message.chat.username) + " " + str(chat_id) + "\n\n" + str(message.text))
@@ -193,7 +201,6 @@ def confirm_and_make_newsletter(message):
         else:
             bot.send_message(chat_id, 'WRONG')
     else:
-        print(chat_id)
         bot.send_message(chat_id, 'MAILING LIST IS EMPTY')
         cache.set_state(chat_id, ChatState.FREE)
 
