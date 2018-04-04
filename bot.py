@@ -230,7 +230,7 @@ def handle_setter(message):
 
 
 @bot.message_handler(commands=[SET_MAILING_LIST_COMMAND])
-def handle_par_name_setter(message):
+def handle_mailing_list_setter(message):
     handle_preliminary_command(message,
                                "CURRENT MAILING LIST: \n\n" + str(mailing_list) + "\n\n\nENTER NEW MAILING LIST",
                                ChatState.SPECIFYING_MAILING_LIST)
