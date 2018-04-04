@@ -79,7 +79,7 @@ def set_subheading(message):
 
 
 def validate_blackout(blackout):
-    return re.match("[01^\d+?\.\d+?$]", blackout) is not None and 0 <= float(blackout) <= 1
+    return re.match("^[-+]?[0-9]*\.?[0-9]+$", blackout) is not None and 0 <= float(blackout) <= 1
 
 
 def set_blackout(message):
@@ -119,6 +119,8 @@ def validate_chat_id(chat_id):
 def set_mailing_list(message):
     chat_id = message.chat.id
 
+    mailing_list.clear()
+
     for chat_id_for_list in message.text.split('\n'):
         if validate_chat_id(chat_id_for_list):
             mailing_list.append(chat_id_for_list)
@@ -149,7 +151,7 @@ def confirm_and_make_newsletter(message):
 
                 sent_message = bot.send_message(chat_id_from_list, message_to_send, parse_mode="markdown")
 
-                bot.delete_message(chat_id_from_list, message_to_delete.message_id)
+                bot.delete_message(chat_id, message_to_delete.message_id)
                 bot.send_message(chat_id,
                                  "SENT TO " + str(chat_id_from_list) + ". MESSAGE ID: " + str(sent_message.message_id))
             bot.send_message(chat_id, 'ALL SENT')

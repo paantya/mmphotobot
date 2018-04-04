@@ -21,7 +21,7 @@ BLUR_CLARIFICATION_TEXT = '. This parameter represents a fuzziness of the backgr
                           'the more indistinct a background photo. Optimal values are from 0 to 15. ' \
                           'Default value has been set to 5'
 WAIT_FOR_AN_IMAGE_MESSAGE_TEXT = "One moment... ⏳"
-BLACKOUT_VALIDATION_FAIL_MESSAGE_TEXT = 'Sorry, blackout intensity should be a float number from 0 to 1.  ' \
+BLACKOUT_VALIDATION_FAIL_MESSAGE_TEXT = 'Sorry, blackout intensity should be a float number from 0 to 1. ' \
                                         'Please, try again 🌚'
 BLUR_VALIDATION_FAIL_MESSAGE_TEXT = 'Sorry, it should be a non-negative integer.  Please, try again 🌚'
 DONE_MESSAGE_TEXT = 'Done ☑️'
