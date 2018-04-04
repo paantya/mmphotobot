@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
 
-import telebot
 import logging
 import re
-from PIL import Image
 from datetime import datetime
-from telebot import types
 from io import BytesIO
 
-from chatdata import ChatState
-from mmphoto import gen_image
+import telebot
+from PIL import Image
+from telebot import types
+
+from botconfig import *
+from botspeech import *
 from botutil import image_to_file, get_dolores_emoji
 from chatdata import ChatCache
-from botspeech import *
-from botconfig import *
+from chatdata import ChatState
+from mmphoto import gen_image
 
 telebot.logger.setLevel(logging.DEBUG)
 
@@ -77,21 +78,38 @@ def set_subheading(message):
     reply_done(chat_id)
 
 
-def validate_opacity(opacity):
-    return re.match("[01^\d+?\.\d+?$]", opacity) is not None and 0 <= float(opacity) <= 1
+def validate_blackout(blackout):
+    return re.match("[01^\d+?\.\d+?$]", blackout) is not None and 0 <= float(blackout) <= 1
 
 
-def set_opacity(message):
+def set_blackout(message):
     chat_id = message.chat.id
-    opacity = message.text
+    blackout = message.text
 
-    if validate_opacity(opacity):
-        cache.set_opacity(chat_id, float(opacity))
+    if validate_blackout(blackout):
+        cache.set_blackout(chat_id, float(blackout))
         cache.set_state(chat_id, ChatState.FREE)
 
         reply_done(message.chat.id)
     else:
-        bot.send_message(chat_id, OPACITY_VALIDATION_FAIL_MESSAGE_TEXT)
+        bot.send_message(chat_id, BLACKOUT_VALIDATION_FAIL_MESSAGE_TEXT)
+
+
+def validate_blur(blur):
+    return blur.isdigit() and int(blur) >= 0
+
+
+def set_blur(message):
+    chat_id = message.chat.id
+    blur = message.text
+
+    if validate_blur(blur):
+        cache.set_blur(chat_id, int(blur))
+        cache.set_state(chat_id, ChatState.FREE)
+
+        reply_done(message.chat.id)
+    else:
+        bot.send_message(chat_id, BLUR_VALIDATION_FAIL_MESSAGE_TEXT)
 
 
 def validate_chat_id(chat_id):
@@ -105,7 +123,8 @@ def set_mailing_list(message):
         if validate_chat_id(chat_id_for_list):
             mailing_list.append(chat_id_for_list)
 
-    bot.send_message(chat_id, "MAILING LIST:\n" + str(mailing_list))
+    bot.send_message(chat_id, "MAILING LIST:\n\n" + str(mailing_list)
+                     + "\n\nTO SEND A NEWSLETTER TYPE /" + SEND_NEWSLETTER_COMMAND)
     cache.set_state(chat_id, ChatState.FREE)
 
 
@@ -131,7 +150,8 @@ def confirm_and_make_newsletter(message):
                 sent_message = bot.send_message(chat_id_from_list, message_to_send, parse_mode="markdown")
 
                 bot.delete_message(chat_id_from_list, message_to_delete.message_id)
-                bot.send_message(chat_id, "SENT TO " + chat_id_from_list + ". MESSAGE ID: " + sent_message.message_id)
+                bot.send_message(chat_id,
+                                 "SENT TO " + str(chat_id_from_list) + ". MESSAGE ID: " + str(sent_message.message_id))
             bot.send_message(chat_id, 'ALL SENT')
             cache.set_state(chat_id, ChatState.FREE)
         else:
@@ -168,9 +188,10 @@ def get_image_from_message(message):
 def build_image(chat_id, background_image):
     heading = cache.get_heading(chat_id)
     subheading = cache.get_subheading(chat_id)
-    opacity = cache.get_opacity(chat_id)
+    blackout = cache.get_blackout(chat_id)
+    blur = cache.get_blur(chat_id)
 
-    return gen_image(heading, subheading, background_image, opacity)
+    return gen_image(heading, subheading, background_image, blackout, blur)
 
 
 def send_photo_debug_info(chat, photo, date):
@@ -218,21 +239,30 @@ def handle_cancel(message):
     bot.send_message(chat_id, CANCEL_MESSAGE_TEXT, reply_markup=stock_images_reply_markup)
 
 
+def clarification_text(command):
+    if command == SET_HEADING_COMMAND:
+        return HEADING_CLARIFICATION_TEXT
+    elif command == SET_SUBHEADING_COMMAND:
+        return SUBHEADING_CLARIFICATION_TEXT
+    elif command == SET_BLACKOUT_COMMAND:
+        return BLACKOUT_CLARIFICATION_TEXT
+    elif command == SET_BLUR_COMMAND:
+        return BLUR_CLARIFICATION_TEXT
+
+
 @bot.message_handler(commands=SET_PHOTO_PARAMETER_COMMANDS)
 def handle_setter(message):
     chat_id = message.chat.id
 
     cache.set_state(chat_id, ChatState(message.text))
-    answer = SEND_ME_PHOTO_PARAMETER_TEXT
-    if message.text == "/" + SET_OPACITY_COMMAND:
-        answer = answer + OPACITY_CLARIFICATION_TEXT
+    answer = SEND_ME_PHOTO_PARAMETER_TEXT + clarification_text(message.text[1:])
     bot.send_message(chat_id, answer, reply_markup=types.ReplyKeyboardRemove())
 
 
 @bot.message_handler(commands=[SET_MAILING_LIST_COMMAND])
 def handle_mailing_list_setter(message):
     handle_preliminary_command(message,
-                               "CURRENT MAILING LIST: \n\n" + str(mailing_list) + "\n\n\nENTER NEW MAILING LIST",
+                               "CURRENT MAILING LIST: \n\n" + str(mailing_list) + "\n\nENTER NEW MAILING LIST",
                                ChatState.SPECIFYING_MAILING_LIST)
 
 
@@ -253,8 +283,10 @@ def handle_text(message):
         set_heading(message)
     elif state == ChatState.SETTING_SUBHEADING:
         set_subheading(message)
-    elif state == ChatState.SETTING_OPACITY:
-        set_opacity(message)
+    elif state == ChatState.SETTING_BLACKOUT:
+        set_blackout(message)
+    elif state == ChatState.SETTING_BLUR:
+        set_blur(message)
     elif state == ChatState.SPECIFYING_MAILING_LIST:
         set_mailing_list(message)
     elif state == ChatState.ENTERING_NEWSLETTER_MESSAGE:

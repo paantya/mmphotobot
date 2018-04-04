@@ -8,12 +8,13 @@ MAIN_FONT_FILE_PATH = 'fonts/OpenSans-Regular.ttf'
 
 
 # Originally by https://github.com/kuparez at https://github.com/kuparez/studsovet_scripts
-def gen_image(heading, subheading, image, opacity=0.56):
+def gen_image(heading, subheading, image, blackout, blur):
     image = image.resize((1920, 1080), Image.ANTIALIAS)
-    opacity = int(255 * opacity)
+    image = image.filter(ImageFilter.GaussianBlur(blur))
+    blackout = int(255 * blackout)
     grey_img = Image.new(mode='RGBA', size=(1920, 1080), color=DARKENING_LAYER_COLOR)
-    grey_img.putalpha(opacity)
-    mask = Image.new('RGBA', (1920, 1080), (0, 0, 0, opacity))
+    grey_img.putalpha(blackout)
+    mask = Image.new('RGBA', (1920, 1080), (0, 0, 0, blackout))
     image.paste(grey_img, mask)
     logo = Image.open(MM_LOGO_FILE_PATH)
     image.paste(logo, (150, 323), logo)

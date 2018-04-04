@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from enum import Enum
+from botcommands import *
 
 
 class ChatState(Enum):
     FREE = '/cancel'
-    SETTING_HEADING = '/set_heading'
-    SETTING_SUBHEADING = '/set_subheading'
-    SETTING_OPACITY = '/set_opacity'
-    SPECIFYING_MAILING_LIST = '/set_admin_parameter'
-    SETTING_PARAMETER_VALUE = 'setting_parameter_value'
-    ENTERING_NEWSLETTER_MESSAGE = '/make_newsletter'
+    SETTING_HEADING = "/" + SET_HEADING_COMMAND
+    SETTING_SUBHEADING = "/" + SET_SUBHEADING_COMMAND
+    SETTING_BLACKOUT = "/" + SET_BLACKOUT_COMMAND
+    SETTING_BLUR = "/" + SET_BLUR_COMMAND
+    SPECIFYING_MAILING_LIST = "/" + SET_MAILING_LIST_COMMAND
+    ENTERING_NEWSLETTER_MESSAGE = "/" + SEND_NEWSLETTER_COMMAND
     CONFIRMING_NEWSLETTER = 'confirming_newsletter'
 
 
@@ -18,7 +19,8 @@ class ChatData:
     chat_id = 0
     heading = 'Heading'
     subheading = 'Subheading'
-    opacity = 0.6
+    blackout = 0.3
+    blur = 5
     cached_message = None
     state = ChatState.FREE
 
@@ -47,8 +49,12 @@ class ChatCache:
         self.get_chat_data_from_cache(chat_id).subheading = value
         pass
 
-    def set_opacity(self, chat_id, value):
-        self.get_chat_data_from_cache(chat_id).opacity = value
+    def set_blackout(self, chat_id, value):
+        self.get_chat_data_from_cache(chat_id).blackout = value
+        pass
+
+    def set_blur(self, chat_id, value):
+        self.get_chat_data_from_cache(chat_id).blur = value
         pass
 
     def set_cached_message(self, chat_id, value):
@@ -65,8 +71,11 @@ class ChatCache:
     def get_subheading(self, chat_id):
         return self.get_chat_data_from_cache(chat_id).subheading
 
-    def get_opacity(self, chat_id):
-        return self.get_chat_data_from_cache(chat_id).opacity
+    def get_blackout(self, chat_id):
+        return self.get_chat_data_from_cache(chat_id).blackout
+
+    def get_blur(self, chat_id):
+        return self.get_chat_data_from_cache(chat_id).blur
 
     def get_cached_message(self, chat_id):
         return self.get_chat_data_from_cache(chat_id).cached_message
