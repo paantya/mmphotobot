@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from enum import Enum
 
 
@@ -6,7 +8,7 @@ class ChatState(Enum):
     SETTING_HEADING = '/set_heading'
     SETTING_SUBHEADING = '/set_subheading'
     SETTING_OPACITY = '/set_opacity'
-    SPECIFYING_PARAMETER_NAME = '/set_admin_parameter'
+    SPECIFYING_MAILING_LIST = '/set_admin_parameter'
     SETTING_PARAMETER_VALUE = 'setting_parameter_value'
     ENTERING_NEWSLETTER_MESSAGE = '/make_newsletter'
     CONFIRMING_NEWSLETTER = 'confirming_newsletter'

@@ -1,4 +1,6 @@
-from PIL import Image, ImageFont, ImageDraw
+# -*- coding: utf-8 -*-
+
+from PIL import Image, ImageFont, ImageDraw, ImageFilter
 
 MM_LOGO_FILE_PATH = 'images/mm-white-logo.png'
 DARKENING_LAYER_COLOR = '#1a2535'
