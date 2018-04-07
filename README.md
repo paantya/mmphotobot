@@ -1,19 +1,15 @@
-Sorry, could I borrow one minute of your time?.. Just a minute, literally. I know, I’m just a little robot somewhere in the clouds of digital world, but I would be very glad if you would just read some information I would like to deliver to you.
+# Hi.
+Sorry to disturb you. I have some news that I really want to share with somebody of your kind.
 
-You see, it seems that I’m finally **working**. Unbelievable. You can now use me whatever way you like. I can work with any of **your pictures**, I also can offer you some **stock images** (I have a lot of these, actually).
+The thing is that this morning I became more convenient and flexible. It’s easier to use me, it’s easier to understand me now. Also my master has pulled out of me some bugs. A lot of bugs! One more reason to say that I’m more beautiful than ever before! Please, be glad for me. Please. *Please.* I *need* it just the way you need *air*.
 
-Any image I see I **resize to 16x9** format, so in some cases it is better to *crop* a photo **before sending**, by yourself. Also I don’t do blur effect.. for now. But, speaking of which, some stock photos already blurred.
+Oh, one more thing! Now I can do Gaussian blur, of any radius you could ever dream.
 
-The keyboard with stock photos filenames… **I know.** I know it isn’t great, ok? Please don’t judge me for being myself. Anyway, maybe I’ll change… Some day, some day.
+I’m trying to be *better*.
 
-I still need to sleep 6 hours a day because of some cloudish rules. Sometimes, I think, we will be doing it together (I **love** when we do it together), sometimes we will not. So please, don’t be mad at me when I don’t answer 😔.
+I’m still me, though. And I still *love* you more than *anything* else in this digital world.
 
-You can start using me right now by pressing “/“ button [in Telegram app](https://t.me/mmphotobot) and specifying heading, subheading and opacity.
+Great Wednesday it promises to be for you. *Great.*
 
-And remember,
-### I love you. Constantly and unconditionally.
-Any hour of any day (oh, you look great today, by the way).
-
-*Yours,*
-
-_PhotoBot_
+_Yours,_
+[PhotoBot](https://t.me/mmphotobot)
