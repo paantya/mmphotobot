@@ -15,11 +15,11 @@ SUBHEADING_CLARIFICATION_TEXT = ''
 BLACKOUT_CLARIFICATION_TEXT = ". Remember, this parameter represents a background darkening intensity, " \
                               "it should be a float from 0 to 1 ☝️, " \
                               "where 0 means \"no darkening\", 1 — \"absolute darkness\". " \
-                              "Default value has been set to 0.3"
+                              "Default value has been set to 0.6"
 BLUR_CLARIFICATION_TEXT = '. This parameter represents a fuzziness of the background ' \
                           'and it can be any non-negative number. The bigger number, ' \
                           'the more indistinct a background photo. Optimal values are from 0 to 15. ' \
-                          'Default value has been set to 5'
+                          'Default value has been set to 11'
 WAIT_FOR_AN_IMAGE_MESSAGE_TEXT = "One moment... ⏳"
 BLACKOUT_VALIDATION_FAIL_MESSAGE_TEXT = 'Sorry, blackout intensity should be a float number from 0 to 1. ' \
                                         'Please, try again 🌚'
