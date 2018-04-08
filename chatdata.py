@@ -19,8 +19,8 @@ class ChatData:
     chat_id = 0
     heading = 'Heading'
     subheading = 'Subheading'
-    blackout = 0.3
-    blur = 5
+    blackout = 0.6
+    blur = 11
     cached_message = None
     state = ChatState.FREE
 
