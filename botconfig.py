@@ -2,13 +2,11 @@
 
 import os
 
-import getip
-
 API_TOKEN = os.environ.get('PHOTOBOT_TOKEN')
 ADMIN_ID = int(os.environ.get('PHOTOBOT_ADMIN_ID'))
 PROD = os.environ.get('PROD')
+WEBHOOK_HOST = os.environ.get('HOST_IP')
 
-WEBHOOK_HOST = getip.get()
 WEBHOOK_PORT = 8443  # 443, 80, 88 or 8443
 PORT_TO_LISTEN = 7771
 HOST_TO_LISTEN = '127.0.0.1'
