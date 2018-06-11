@@ -2,9 +2,11 @@
 
 import logging
 import re
+import time
 from datetime import datetime
 from io import BytesIO
 
+import cherrypy
 import telebot
 from PIL import Image
 from telebot import types
@@ -16,18 +18,35 @@ from chatdata import ChatCache
 from chatdata import ChatState
 from mmphoto import gen_image
 
-telebot.logger.setLevel(logging.DEBUG)
+telebot.logger.setLevel(logging.INFO)
 
 # A cache for chat data.
 cache = ChatCache()
 
-# A list of chats special messages will be sent to
+# A list of chats special messages will be sent to.
 mailing_list = []
 
 # Start the bot.
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot(API_TOKEN, threaded=False)
 
-# Read stock images names, make a keyboard
+
+# WebhookServer, process webhook calls.
+class WebhookServer(object):
+    @cherrypy.expose
+    def index(self):
+        if 'content-length' in cherrypy.request.headers and \
+                'content-type' in cherrypy.request.headers and \
+                cherrypy.request.headers['content-type'] == 'application/json':
+            length = int(cherrypy.request.headers['content-length'])
+            json_string = cherrypy.request.body.read(length).decode("utf-8")
+            update = telebot.types.Update.de_json(json_string)
+            bot.process_new_messages([update.message])
+            return ''
+        else:
+            raise cherrypy.HTTPError(403)
+
+
+# Read stock images names, make a keyboard.
 stock_photo_names = []
 stock_images_reply_markup = types.ReplyKeyboardMarkup()
 for d, dirs, files in os.walk(os.getcwd() + '/' + STOCK_IMAGES_DIRECTORY):
@@ -315,8 +334,30 @@ def handle_any_other_message(message):
         bot.send_message(chat_id, get_dolores_emoji())
 
 
-try:
-    bot.send_message(ADMIN_ID, UP_MESSAGE_TEXT)
-    bot.polling(none_stop=True)
-except Exception as e:
-    bot.send_message(ADMIN_ID, EXCEPTION_MESSAGE_TEXT + "\n\n" + str(e))
+while True:
+    try:
+        bot.send_message(ADMIN_ID, UP_MESSAGE_TEXT)
+        # Remove webhook, it fails sometimes the set if there is a previous webhook
+        bot.remove_webhook()
+
+        if PROD == 'TRUE':
+
+            # Set webhook
+            bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
+                            certificate=open(WEBHOOK_SSL_CERT, 'r'))
+
+            time.sleep(1)
+
+            # Start cherrypy server
+            cherrypy.config.update({
+                'server.socket_host': HOST_TO_LISTEN,
+                'server.socket_port': PORT_TO_LISTEN,
+                'engine.autoreload.on': False
+            })
+
+            cherrypy.quickstart(WebhookServer(), '/', {'/': {}})
+        else:
+            bot.polling(none_stop=True)
+
+    except Exception as e:
+        bot.send_message(ADMIN_ID, EXCEPTION_MESSAGE_TEXT + "\n\n" + str(e))
