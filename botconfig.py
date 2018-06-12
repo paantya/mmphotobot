@@ -3,7 +3,7 @@
 import os
 
 API_TOKEN = os.environ.get('PHOTOBOT_TOKEN')
-ADMIN_ID = int(os.environ.get('PHOTOBOT_ADMIN_ID'))
+ADMINS = os.environ.get('PHOTOBOT_ADMINS').split(',')
 PROD = os.environ.get('PROD')
 WEBHOOK_HOST = os.environ.get('HOST_IP')
 

@@ -55,11 +55,20 @@ for d, dirs, files in os.walk(os.getcwd() + '/' + STOCK_IMAGES_DIRECTORY):
         stock_images_reply_markup.add(f)
 
 
+def send_message_to_admins(message):
+    for admin in ADMINS:
+        bot.send_message(admin, message)
+
+
+def is_admin(user):
+    return str(user) in ADMINS
+
+
 def debug_message_processing(message):
     chat_id = message.chat.id
 
-    if chat_id != ADMIN_ID:
-        bot.send_message(ADMIN_ID, "MESSAGE FROM " + str(message.chat.first_name) + " @" + str(
+    if not is_admin(chat_id):
+        send_message_to_admins("MESSAGE FROM " + str(message.chat.first_name) + " @" + str(
             message.chat.username) + " " + str(chat_id) + "\n\n" + str(message.text))
 
 
@@ -190,7 +199,7 @@ def handle_preliminary_admin_command(chat_id, text_to_send, state_to_set):
 def handle_preliminary_command(message, text_to_send, state_to_set):
     chat_id = message.chat.id
 
-    if chat_id != ADMIN_ID:
+    if not is_admin(chat_id):
         handle_free_text(message)
     else:
         handle_preliminary_admin_command(chat_id, text_to_send, state_to_set)
@@ -218,13 +227,14 @@ def build_image(chat_id, background_image):
 def send_photo_debug_info(chat, photo, date):
     chat_id = chat.id
 
-    if chat_id != ADMIN_ID:
+    if not is_admin(chat_id):
         first_name = chat.first_name
         last_name = chat.last_name
         username = chat.username
         caption = "PHOTO BY " + str(first_name) + " " + str(last_name) + " @" + str(username) + " " + str(chat_id) \
                   + ", " + str(datetime.fromtimestamp(int(date)).strftime('%Y-%m-%d %H:%M:%S'))
-        bot.send_photo(ADMIN_ID, image_to_file(photo, SENT_IMAGE_FILE_NAME), caption=caption)
+        for admin in ADMINS:
+            bot.send_photo(admin, image_to_file(photo, SENT_IMAGE_FILE_NAME), caption=caption)
 
 
 def build_and_send_image(message, background_image):
@@ -248,7 +258,7 @@ def handle_start_help(message):
     cache.set_state(chat_id, ChatState.FREE)
     bot.send_message(chat_id, START_MESSAGE_TEXT, reply_markup=types.ReplyKeyboardRemove())
 
-    if chat_id == ADMIN_ID:
+    if is_admin(chat_id):
         bot.send_message(chat_id, START_MESSAGE_ADMIN_TEXT)
 
 
@@ -326,17 +336,19 @@ def handle_photo(message):
 def handle_any_other_message(message):
     chat_id = message.chat.id
 
-    if chat_id != ADMIN_ID:
+    if not is_admin(chat_id):
         # Forward.
         message_id = message.message_id
 
-        bot.forward_message(ADMIN_ID, chat_id, message_id)
+        for admin in ADMINS:
+            bot.forward_message(admin, chat_id, message_id)
+
         bot.send_message(chat_id, get_dolores_emoji())
 
 
 while True:
     try:
-        bot.send_message(ADMIN_ID, UP_MESSAGE_TEXT)
+        send_message_to_admins(UP_MESSAGE_TEXT)
         # Remove webhook, it fails sometimes the set if there is a previous webhook
         bot.remove_webhook()
 
@@ -360,7 +372,7 @@ while True:
             bot.polling(none_stop=True)
 
     except Exception as e:
-        bot.send_message(ADMIN_ID, EXCEPTION_MESSAGE_TEXT + "\n\n" + str(e))
+        send_message_to_admins(EXCEPTION_MESSAGE_TEXT + "\n\n" + str(e))
     else:
-        bot.send_message(ADMIN_ID, SHUTDOWN_MESSAGE_TEXT)
+        send_message_to_admins(SHUTDOWN_MESSAGE_TEXT)
         break
