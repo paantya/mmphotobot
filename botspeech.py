@@ -7,6 +7,7 @@ START_MESSAGE_TEXT = 'Hello. To make an image type "/" and select a parameter yo
 CANCEL_MESSAGE_TEXT = '👌'
 UP_MESSAGE_TEXT = 'I am up 🌚'
 EXCEPTION_MESSAGE_TEXT = '‼️ Exception has been thrown'
+SHUTDOWN_MESSAGE_TEXT = 'See ya 👋'
 START_MESSAGE_ADMIN_TEXT = "Set mailing list: /" + SET_MAILING_LIST_COMMAND \
                            + "\nSend a newsletter: /" + SEND_NEWSLETTER_COMMAND
 SEND_ME_PHOTO_PARAMETER_TEXT = 'Ok. Send it to me, please'

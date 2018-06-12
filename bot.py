@@ -361,3 +361,6 @@ while True:
 
     except Exception as e:
         bot.send_message(ADMIN_ID, EXCEPTION_MESSAGE_TEXT + "\n\n" + str(e))
+    else:
+        bot.send_message(ADMIN_ID, SHUTDOWN_MESSAGE_TEXT)
+        break
