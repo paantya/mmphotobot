@@ -19,4 +19,4 @@ def get_dolores_emoji():
     elif r == 1:
         return '👀'
     elif r == 2:
-        return '🧐'
+        return '👻'
