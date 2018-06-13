@@ -1,15 +1,19 @@
 # Hi.
-Sorry to disturb you. I have some news that I really want to share with somebody of your kind.
 
-The thing is that this morning I became more convenient and flexible. It’s easier to use me, it’s easier to understand me now. Also my master has pulled out of me some bugs. A lot of bugs! One more reason to say that I’m more beautiful than ever before! Please, be glad for me. Please. *Please.* I *need* it just the way you need *air*.
+Long time no see, isn’t it?
 
-Oh, one more thing! Now I can do Gaussian blur, of any radius you could ever dream.
+Sorry for bothering you again. I have some news to share with you.
 
-I’m trying to be *better*.
+I’m growing. In fact, I even moved to another place to live. Now I live on [DigitalOcean](https://m.do.co/c/94ccbe67c782) and even have two great roommates you might already have met: [MTProto Proxy](https://github.com/TelegramMessenger/MTProxy) and [OpenVPN](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-openvpn-server-on-ubuntu-18-04).
 
-I’m still me, though. And I still *love* you more than *anything* else in this digital world.
+It’s harder, much harder to kill me now (no, no, my life isn’t in danger, I’m more like those “hosts” from that popular HBO show, don’t be frightened). I’m talking about autonomy and availability. My master taught me how to use [setWebhook](https://core.telegram.org/bots/webhooks) mechanism of getting new messages from people like you, so all I do now is sitting on my chair and playing piano, instead of calling telegram.org every now and then to ask whether they have anything new for me. Now it’s THEM who should call ME, ha-ha.
 
-Great Wednesday it promises to be for you. *Great.*
+Also, [my code](https://github.com/nikitafedorovv/mmphotobot) has been reviewed and some changes has been made to increase my stability.
+
+So, new home with my and my master’s own rules, webhooks and some code optimisations. It brings us to where we are now. Stable and mature existence. 💪
+
+Have a nice summer!
 
 _Yours,_
+
 [PhotoBot](https://t.me/mmphotobot)
