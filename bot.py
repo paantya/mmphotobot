@@ -179,7 +179,8 @@ def confirm_and_make_newsletter(message):
             for chat_id_from_list in mailing_list:
                 message_to_delete = bot.send_message(chat_id, "SENDING TO " + chat_id_from_list + "...")
 
-                sent_message = bot.send_message(chat_id_from_list, message_to_send, parse_mode="markdown")
+                sent_message = bot.send_message(chat_id_from_list, message_to_send, parse_mode="markdown",
+                                                disable_web_page_preview=True)
 
                 bot.delete_message(chat_id, message_to_delete.message_id)
                 bot.send_message(chat_id,
