@@ -162,8 +162,10 @@ def enter_newsletter_message(message):
     chat_id = message.chat.id
 
     cache.set_cached_message(chat_id, message)
+    message = cache.get_cached_message(chat_id)
+
     bot.send_message(chat_id, "YOUR MESSAGE:")
-    bot.send_message(chat_id, cache.get_cached_message(chat_id).text, parse_mode="markdown")
+    bot.send_message(chat_id, message.text, parse_mode="markdown", disable_web_page_preview=True)
     bot.send_message(chat_id, "ENTER CURRENT DAY OF MONTH TO CONFIRM")
     cache.set_state(chat_id, ChatState.CONFIRMING_NEWSLETTER)
 
