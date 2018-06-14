@@ -2,9 +2,11 @@
 
 from PIL import Image, ImageFont, ImageDraw, ImageFilter
 
-MM_LOGO_FILE_PATH = 'images/mm-white-logo.png'
+from botconfig import *
+
+MM_LOGO_FILE_PATH = PROJECT_DIRECTORY + '/images/mm-white-logo.png'
+MAIN_FONT_FILE_PATH = PROJECT_DIRECTORY + '/fonts/OpenSans-Regular.ttf'
 DARKENING_LAYER_COLOR = '#1a2535'
-MAIN_FONT_FILE_PATH = 'fonts/OpenSans-Regular.ttf'
 
 
 # Originally by https://github.com/kuparez at https://github.com/kuparez/studsovet_scripts

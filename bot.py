@@ -49,7 +49,7 @@ class WebhookServer(object):
 # Read stock images names, make a keyboard.
 stock_photo_names = []
 stock_images_reply_markup = types.ReplyKeyboardMarkup()
-for d, dirs, files in os.walk(os.getcwd() + '/' + STOCK_IMAGES_DIRECTORY):
+for d, dirs, files in os.walk(PROJECT_DIRECTORY + '/' + STOCK_IMAGES_DIRECTORY):
     for f in files:
         stock_photo_names.append(f)
         stock_images_reply_markup.add(f)
@@ -74,7 +74,8 @@ def debug_message_processing(message):
 
 def handle_free_text(message):
     if message.text in stock_photo_names:
-        build_and_send_image(message, Image.open(STOCK_IMAGES_DIRECTORY + message.text).convert('RGB'))
+        build_and_send_image(message, Image.open(
+            PROJECT_DIRECTORY + '/' + STOCK_IMAGES_DIRECTORY + message.text).convert('RGB'))
     else:
         bot.send_message(message.chat.id, get_dolores_emoji())
         debug_message_processing(message)
