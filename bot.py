@@ -11,7 +11,6 @@ import telebot
 from PIL import Image
 from telebot import types
 
-from botconfig import *
 from botspeech import *
 from botutil import image_to_file, get_dolores_emoji
 from chatdata import ChatCache
@@ -61,8 +60,9 @@ class WebhookServer(object):
 
 
 # Read stock images names, make a keyboard.
-stock_photo_names = []
 stock_images_reply_markup = types.ReplyKeyboardMarkup()
+stock_images_reply_markup.add(SEND_OWN_IMAGE_BUTTON_TEXT)
+stock_photo_names = []
 for d, dirs, files in os.walk(PROJECT_DIRECTORY + '/' + STOCK_IMAGES_DIRECTORY):
     for f in files:
         stock_photo_names.append(f)
@@ -85,17 +85,22 @@ def handle_free_text(message):
     if message.text in stock_photo_names:
         build_and_send_image(message, Image.open(
             PROJECT_DIRECTORY + '/' + STOCK_IMAGES_DIRECTORY + message.text).convert('RGB'))
+    elif message.text == SEND_OWN_IMAGE_BUTTON_TEXT:
+        bot.send_message(message.chat.id, OK_SEND_ME_THE_PICTURE_TEXT)
     else:
         bot.send_message(message.chat.id, get_dolores_emoji())
         debug_message_processing(message)
 
 
 def reply_done(chat_id):
-    commands_message_text = "\n"
-    for command in SET_PHOTO_PARAMETER_COMMANDS:
-        commands_message_text += "\n/" + command
-    bot.send_message(chat_id, DONE_MESSAGE_TEXT + commands_message_text + "\n\n" + CHOOSE_BACKGROUND_IMAGE_TEXT,
-                     reply_markup=stock_images_reply_markup)
+    if cache.headings_set(chat_id) is True:
+        reply_markup = stock_images_reply_markup
+    else:
+        reply_markup = types.ReplyKeyboardRemove()
+
+    bot.send_message(chat_id,
+                     DONE_MESSAGE_TEXT + "\n" + PHOTO_PARAMETERS_COMMANDS_AS_STRING +
+                     "\n\n" + CHOOSE_BACKGROUND_IMAGE_TEXT, reply_markup=reply_markup)
 
 
 def set_heading(message):
@@ -260,6 +265,7 @@ def build_and_send_image(message, background_image):
     bot.send_document(chat_id, image_to_file(built_image, SENT_IMAGE_FILE_NAME))
     bot.send_photo(chat_id, image_to_file(built_image, SENT_IMAGE_FILE_NAME))
     bot.delete_message(chat_id, wait_for_an_image_message.message_id)
+    bot.send_message(chat_id, get_dolores_emoji())
 
     send_photo_debug_info(message.chat, built_image, message.date)
 
@@ -269,7 +275,7 @@ def handle_start_help(message):
     chat_id = message.chat.id
 
     cache.set_state(chat_id, ChatState.FREE)
-    bot.send_message(chat_id, START_MESSAGE_TEXT, reply_markup=types.ReplyKeyboardRemove())
+    bot.send_message(chat_id, START_MESSAGE_TEXT + "\n" + PHOTO_PARAMETERS_COMMANDS_AS_STRING)
 
     if is_admin(chat_id):
         bot.send_message(chat_id, START_MESSAGE_ADMIN_TEXT)
@@ -294,7 +300,7 @@ def clarification_text(command):
         return BLUR_CLARIFICATION_TEXT
 
 
-@bot.message_handler(commands=SET_PHOTO_PARAMETER_COMMANDS)
+@bot.message_handler(commands=PHOTO_PARAMETERS_COMMANDS)
 def handle_setter(message):
     chat_id = message.chat.id
 

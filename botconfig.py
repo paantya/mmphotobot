@@ -48,3 +48,10 @@ ALL_CONTENT_TYPES = ["text",
                      "migrate_to_chat_id",
                      "migrate_from_chat_id",
                      "pinned_message"]
+
+DEFAULT_HEADING = 'Specify headings, please'
+DEFAULT_SUBHEADING = 'Set heading and subheading, please'
+DEFAULT_BLACKOUT = 0.6
+DEFAULT_BLUR = 11
+
+SEND_OWN_IMAGE_BUTTON_TEXT = 'Use a custom image from device'

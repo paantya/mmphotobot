@@ -3,6 +3,7 @@
 from enum import Enum
 
 from botcommands import *
+from botconfig import *
 
 
 class ChatState(Enum):
@@ -18,10 +19,10 @@ class ChatState(Enum):
 
 class ChatData:
     chat_id = 0
-    heading = 'Heading'
-    subheading = 'Subheading'
-    blackout = 0.6
-    blur = 11
+    heading = DEFAULT_HEADING
+    subheading = DEFAULT_SUBHEADING
+    blackout = DEFAULT_BLACKOUT
+    blur = DEFAULT_BLUR
     cached_message = None
     state = ChatState.FREE
 
@@ -83,3 +84,7 @@ class ChatCache:
 
     def get_state(self, chat_id):
         return self.get_chat_data_from_cache(chat_id).state
+
+    def headings_set(self, chat_id):
+        chat_data = self.get_chat_data_from_cache(chat_id)
+        return (chat_data.heading != DEFAULT_HEADING) & (chat_data.subheading != DEFAULT_SUBHEADING)
