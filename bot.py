@@ -30,6 +30,15 @@ mailing_list = []
 bot = telebot.TeleBot(API_TOKEN, threaded=False)
 
 
+def send_message_to_admins(message):
+    for admin in ADMINS:
+        bot.send_message(admin, message)
+
+
+def handle_exception(exception):
+    send_message_to_admins(EXCEPTION_MESSAGE_TEXT + "\n\n" + str(exception))
+
+
 # WebhookServer, process webhook calls.
 class WebhookServer(object):
     @cherrypy.expose
@@ -40,7 +49,12 @@ class WebhookServer(object):
             length = int(cherrypy.request.headers['content-length'])
             json_string = cherrypy.request.body.read(length).decode("utf-8")
             update = telebot.types.Update.de_json(json_string)
-            bot.process_new_messages([update.message])
+
+            try:
+                bot.process_new_messages([update.message])
+            except Exception as exception:
+                handle_exception(exception)
+
             return ''
         else:
             raise cherrypy.HTTPError(403)
@@ -53,11 +67,6 @@ for d, dirs, files in os.walk(PROJECT_DIRECTORY + '/' + STOCK_IMAGES_DIRECTORY):
     for f in files:
         stock_photo_names.append(f)
         stock_images_reply_markup.add(f)
-
-
-def send_message_to_admins(message):
-    for admin in ADMINS:
-        bot.send_message(admin, message)
 
 
 def is_admin(user):
@@ -376,7 +385,7 @@ while True:
             bot.polling(none_stop=True)
 
     except Exception as e:
-        send_message_to_admins(EXCEPTION_MESSAGE_TEXT + "\n\n" + str(e))
+        handle_exception(e)
     else:
         send_message_to_admins(SHUTDOWN_MESSAGE_TEXT)
         break
