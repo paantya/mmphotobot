@@ -5,7 +5,7 @@ import os
 PROJECT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 
 API_TOKEN = os.environ.get('PHOTOBOT_TOKEN')
-ADMINS = os.environ.get('PHOTOBOT_ADMINS').split(',')
+#ADMINS = os.environ.get('PHOTOBOT_ADMINS').split(',')
 PROD = os.environ.get('PROD')
 WEBHOOK_HOST = os.environ.get('HOST_IP')
 

@@ -7,6 +7,7 @@ from datetime import datetime
 from io import BytesIO
 
 import cherrypy
+from telebot import *
 import telebot
 from PIL import Image
 from telebot import types
@@ -26,12 +27,14 @@ cache = ChatCache()
 mailing_list = []
 
 # Start the bot.
-bot = telebot.TeleBot(API_TOKEN, threaded=False)
+import config #import tg api_token
+bot = telebot.TeleBot(config.API_TOKEN, threaded=False)
 
 
 def send_message_to_admins(message):
-    for admin in ADMINS:
-        bot.send_message(admin, message)
+    #for admin in ADMINS:
+    #    bot.send_message(admin, message)
+    pass
 
 
 def handle_exception(exception):
