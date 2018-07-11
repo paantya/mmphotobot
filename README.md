@@ -20,7 +20,8 @@ _Yours,_
 
 
 install for begin:
-    pip3 install cherrypy
+
+    pip3 install cherrypy    
     pip3 install pillow
     pip3 install pyTelegramBotAPI
 
