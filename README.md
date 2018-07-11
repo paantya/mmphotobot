@@ -21,8 +21,9 @@ _Yours,_
 
 ### install for begin:
 
-    pip3 install cherrypy    
-    pip3 install pillow
-    pip3 install pyTelegramBotAPI
+    pip3.6 install cherrypy    
+    pip3.6 install pillow
+    pip3.6 install pyTelegramBotAPI
+    python3.6 ./bot.py
 
 
