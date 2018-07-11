@@ -19,11 +19,12 @@ _Yours,_
 [PhotoBot](https://t.me/mmphotobot)
 
 
-### install for begin:
+### install and begin:
 
     pip3.6 install cherrypy    
     pip3.6 install pillow
     pip3.6 install pyTelegramBotAPI
+    
     python3.6 ./bot.py
 
 
