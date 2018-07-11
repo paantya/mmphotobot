@@ -395,6 +395,6 @@ while True:
 
     except Exception as e:
         handle_exception(e)
-    else:
-        send_message_to_admins(SHUTDOWN_MESSAGE_TEXT)
-        break
+#    else:
+#        send_message_to_admins(SHUTDOWN_MESSAGE_TEXT)
+#        break
