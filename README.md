@@ -17,3 +17,11 @@ Have a nice summer!
 _Yours,_
 
 [PhotoBot](https://t.me/mmphotobot)
+
+
+install for begin:
+    pip3 install cherrypy
+    pip3 install pillow
+    pip3 install pyTelegramBotAPI
+
+
