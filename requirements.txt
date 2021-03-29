@@ -1,4 +1,4 @@
 CherryPy==15.0.0
 enum34==1.1.6
-Pillow==5.0.0
+Pillow==8.1.1
 pyTelegramBotAPI==3.6.2
